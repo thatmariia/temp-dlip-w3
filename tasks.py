@@ -16,7 +16,7 @@ import numpy as np
 # -----------------------------------------------
 
 def compute_output_size_1d(input_array, kernel_array):
-    pass
+    return len(input_array) - len(kernel_array) + 1
 
 
 # -----------------------------------------------
@@ -37,7 +37,10 @@ print(compute_output_size_1d(input_array, kernel_array))
 def convolve_1d(input_array, kernel_array):
     # Tip: start by initializing an empty output array (you can use your function above to calculate the correct size).
     # Then fill the cells in the array with a loop.
-    pass
+    out = np.zeros(compute_output_size_1d(input_array, kernel_array))
+    for i in range(len(out)):
+        out[i] = np.sum(input_array[i:i + len(kernel_array)] * kernel_array)
+    return out
 
 # -----------------------------------------------
 # Another tip: write test cases like this, so you can easily test your function.
@@ -56,7 +59,8 @@ print(convolve_1d(input_array, kernel_array))
 # -----------------------------------------------
 
 def compute_output_size_2d(input_matrix, kernel_matrix):
-    pass
+    return (input_matrix.shape[0] - kernel_matrix.shape[0] + 1,
+            input_matrix.shape[1] - kernel_matrix.shape[1] + 1)
 
 
 # -----------------------------------------------
@@ -72,7 +76,13 @@ def compute_output_size_2d(input_matrix, kernel_matrix):
 def convolute_2d(input_matrix, kernel_matrix):
     # Tip: same tips as above, but you might need a nested loop here in order to
     # define which parts of the input matrix need to be multiplied with the kernel matrix.
-    pass
+    h, w = compute_output_size_2d(input_matrix, kernel_matrix)
+    kh, kw = kernel_matrix.shape
+    out = np.zeros((h, w))
+    for i in range(h):
+        for j in range(w):
+            out[i, j] = np.sum(input_matrix[i:i + kh, j:j + kw] * kernel_matrix)
+    return out
 
 
 # -----------------------------------------------
